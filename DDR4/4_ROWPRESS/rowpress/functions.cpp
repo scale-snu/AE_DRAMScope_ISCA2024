@@ -23,7 +23,7 @@ void SingleSided(SoftMCPlatform *platform, uint bank, uint aggressor, uint hamme
   // Activate the aggressor row for hammer_count times
   p.add_label("HMR_BEGIN");
   p.add_inst(SMC_NOP(), SMC_NOP(), SMC_NOP(), SMC_ACT(BAR, 0, RAR, 0)); // ACT
-  p.add_inst(SMC_SLEEP(7 * (RAS_scale/6)));                             
+  p.add_inst(SMC_SLEEP(7 * (RAS_scale)));                             
   p.add_inst(SMC_PRE(BAR, 0, 0), SMC_NOP(), SMC_NOP(), SMC_NOP());      // PRE
   p.add_inst(all_nops());                                               
   if (RP_scale > 1) 
