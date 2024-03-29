@@ -1,6 +1,6 @@
 # Single-sided RowHammer attack
 
-## Run
+## Run (3 hours)
 ```
 $ make
 $ sudo ./run.sh

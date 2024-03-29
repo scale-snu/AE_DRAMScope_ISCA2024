@@ -183,7 +183,7 @@ if __name__ == '__main__':
             if i < n: 
                 top5.insert(m, n)
                 top5_aggr_dp.insert(m, file.split('/')[-1].split('_')[-2].split('aggr')[-1])
-                top5_vic_dp.insert(m, file.split('/')[-1].split('_')[-1].split('vic')[-1])
+                top5_vic_dp.insert(m, file.split('/')[-1].split('_')[-1].split('vic')[-1].split('.')[0])
                 break
             m += 1
 
@@ -192,7 +192,7 @@ if __name__ == '__main__':
             if i > n:
                 bot5.insert(m, n)
                 bot5_aggr_dp.insert(m, file.split('/')[-1].split('_')[-2].split('aggr')[-1])
-                bot5_vic_dp.insert(m, file.split('/')[-1].split('_')[-1].split('vic')[-1])
+                bot5_vic_dp.insert(m, file.split('/')[-1].split('_')[-1].split('vic')[-1].split('.')[0])
                 break
             m+=1
 
@@ -201,9 +201,9 @@ if __name__ == '__main__':
     bot5_vic = []
     bot5_aggr = []
     for i in range(5):
-        top5_vic.append(str(hex(permute(int(top5_vic_dp[i][-1], 16), [2,0,3,1]))))
+        top5_vic.append (str(hex(permute(int(top5_vic_dp [i][-1], 16), [2,0,3,1]))))
         top5_aggr.append(str(hex(permute(int(top5_aggr_dp[i][-1], 16), [2,0,3,1]))))
-        bot5_vic.append(str(hex(permute(int(bot5_vic_dp[i][-1], 16), [2,0,3,1]))))
+        bot5_vic.append (str(hex(permute(int(bot5_vic_dp [i][-1], 16), [2,0,3,1]))))
         bot5_aggr.append(str(hex(permute(int(bot5_aggr_dp[i][-1], 16), [2,0,3,1]))))
 
     ##############################################
@@ -223,3 +223,6 @@ if __name__ == '__main__':
     
     plt.savefig('./figure_16.png')
     plt.cla()
+
+
+
