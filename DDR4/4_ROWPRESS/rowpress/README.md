@@ -1,6 +1,6 @@
 # RowPress
 
-## Run
+## Run (15 min)
 ```
 $ make
 $ sudo ./run.sh
