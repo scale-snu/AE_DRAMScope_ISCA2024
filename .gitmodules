@@ -1,0 +1,6 @@
+[submodule "SoftMC"]
+	path = SoftMC
+	url = https://github.com/CMU-SAFARI/SoftMC.git
+[submodule "DRAM-Bender"]
+	path = DRAM-Bender
+	url = https://github.com/CMU-SAFARI/DRAM-Bender.git
