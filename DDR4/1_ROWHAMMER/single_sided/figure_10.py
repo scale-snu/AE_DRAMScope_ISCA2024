@@ -163,7 +163,7 @@ if __name__ == '__main__':
             ######################################
             ############     6F2     #############
             ######################################
-            if vic > 0 and vic < 640: # typical subarray
+            if vic >= 4096 and vic < 4096+640: # typical subarray
                 typical[wr_pttn] += 1 / N_ROW / N_BIT
             elif vic > 32768 - 640 and vic < 32768: # edge subarray
                 edge[wr_pttn] += 1 / N_ROW / N_BIT

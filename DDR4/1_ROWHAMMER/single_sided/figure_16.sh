@@ -1,1 +1,1 @@
-python ./figure_16.py s ./data/DRAMScope/rowhammer/s17_00/600000/1tRAS_1tRP/75c/
+python3 ./figure_16.py s ./data/DRAMScope/rowhammer/s17_00/600000/1tRAS_1tRP/75c/

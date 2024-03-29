@@ -160,6 +160,7 @@ if __name__ == '__main__':
     for tmp_file in files:
         n = 0
         file = os.path.join(file_dir, tmp_file)
+        if 'ba0_ra0k_' not in file: continue 
         for line in read_file_chunks(file, chunk_size):
 
             if 'Opened' in line or 'Successfully' in line : continue
