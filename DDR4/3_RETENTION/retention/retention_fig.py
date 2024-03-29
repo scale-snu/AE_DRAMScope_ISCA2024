@@ -21,6 +21,7 @@ if __name__ == '__main__':
     ba = 0
     file = sys.argv[1]
     for line in read_file_chunks(file, chunk_size):
+        if 'Opened' in line or 'Successfully' in line : continue
         bank, row, col, bit, rev_bit = map(int,line.strip().split(",")) 
         chip = (2*(bit // 64) + ((bit//4)%2))
         x.append(4096*chip + 32*col + rev_bit)

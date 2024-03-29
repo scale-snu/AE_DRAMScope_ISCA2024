@@ -1,1 +1,1 @@
-python3 ./retention_fig.py ./log
+python3 ./retention_fig.py ./retention.csv

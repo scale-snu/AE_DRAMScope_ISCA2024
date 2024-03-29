@@ -1,6 +1,6 @@
 # Retention time test
 
-## Run
+## Run (2 min)
 
 ```
 $ make
@@ -22,4 +22,4 @@ sudo ./Retention [-start start] [-bank bank] [-num_rows num_rows] [-sleep sleep]
 ```
 $ ./section_3.sh
 ```
-2. Open `true_anti.png`.
+2. Open `true_anti.png`. If there are consists only of true-cells, a single color appears in the graph, while if there are true-/anti-cells present, it manifests as a striped pattern.
