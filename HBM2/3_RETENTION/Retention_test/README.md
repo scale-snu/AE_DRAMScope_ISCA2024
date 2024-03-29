@@ -20,5 +20,5 @@ $ sudo ./Retention [REFRESH INTERVAL] [CELL DATA]
 $ bash section_3.sh
 ```
 
-2. Open `section_3.svg`.
+2. Open `section_3.svg`. If there are consists only of true-cells, a single color appears in the graph, while if there are true-/anti-cells present, it manifests as a striped pattern.
 
