@@ -1,0 +1,1 @@
+./Rowcopy -wait 3 -bank 0 -vender s > subarray_size.txt

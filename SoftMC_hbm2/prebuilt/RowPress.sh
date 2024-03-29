@@ -1,0 +1,1 @@
+./programFPGA.sh hbm2_7800ns_1k.bit

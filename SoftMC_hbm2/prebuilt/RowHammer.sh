@@ -1,0 +1,1 @@
+./programFPGA.sh hbm2_35ns_10k.bit

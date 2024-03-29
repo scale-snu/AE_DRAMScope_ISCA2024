@@ -1,0 +1,1 @@
+./Rowcopy -src 300 -dst 400 -wait 3 -bank 0 -src_dp 0xFFFFFFFF -dst_dp 0x0 -vendor s > coupled_row.txt
