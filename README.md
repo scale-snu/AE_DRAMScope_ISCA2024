@@ -1,9 +1,6 @@
 # Artifact Evaluation for "DRAMScope: Uncovering DRAM Microarchitecture and Characteristics by Issuing Memory Commands", ISCA 2024.
 This repository contains artifact and workflows for reproducing the experiments presented in the ISCA 2024 paper by H. Nam et al.
 
-link는 넣어야 해야함
-[![DOI](https://zenodo.org/badge/767037552.svg)](https://zenodo.org/doi/10.5281/zenodo.10867231)
-
 ## Contents
 This repository contains **DDR4** and **HBM2** directories, and each consist of below subdirectories.
 1. **RowHammer attack**. (Related to Fig. 7, 9, 10, 12, 13, and 16)
