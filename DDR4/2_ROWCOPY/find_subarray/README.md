@@ -1,6 +1,6 @@
 # Find subarray sizes
 
-## Run
+## Run (1 min)
 
 ```
 $ make

@@ -84,9 +84,9 @@ int main(int argc, char * argv[]) {
       }
     }
     if (count > 14) {
-      printf("subarray size: %3d\n", dst_row - src_row);
+      printf("subarray size: %3d (row = %d)\n", dst_row - src_row, src_row);
       src_row = dst_row;
     }
   }
-  printf("subarray size: %3d\n", NUM_ROWS - src_row);
+  printf("subarray size: %3d (row = %d)\n", NUM_ROWS - src_row, src_row);
 }
