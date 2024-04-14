@@ -202,7 +202,6 @@ void testRetention(fpga_t* fpga, const int retention, const int data) {
   // write data in cells of one bank
   //////////////////////////////////////////////////
   fflush(stdout);
-  AutoRefresh(fpga, 0, 0, iseq);
   
   // write the data pattern to the entire row
   int num_row = 8192;
