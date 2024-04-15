@@ -8,12 +8,8 @@ N_ROW = 1024 # num_rows
 N_COL = pow(2,10)
 N_BIT = 65536 / 16
 
-edge = {}
-typical = {}
-
-for data in [0, 1]:
-    edge[data] = 0
-    typical[data] = 0
+edge = [0 for i in range(2)]
+typical = [0 for i in range(2)]
 
 def read_file_chunks(file_path, chunk_size=2):
     with open(file_path, 'r') as log_file:
@@ -170,7 +166,9 @@ if __name__ == '__main__':
 
     ##############################################
     ###############     plot     #################
-    ##############################################'
+    ##############################################
+    
+    '''
     plt.subplot(121)
     plt.title("Typical subarray", fontsize = 15, weight='bold')
     # plt.ylim([0,0.0002])
@@ -184,8 +182,18 @@ if __name__ == '__main__':
     plt.yticks(fontsize=10)
     plt.xticks(range(0, 2), fontsize=10)
     plt.bar([0, 1], edge.values(), width=0.5)
-
+    '''
+    x_axis = ['0/1', '1/0']
+    plt.bar([i-0.175 for i  in range(2)], typical, width=0.35, alpha=0.8, color='blue', label='Typical')
+    plt.bar([i+0.175 for i  in range(2)], edge, width=0.35, alpha=0.8, color='orange', label='Edge')
+    plt.yticks(fontsize=10)
+    plt.xticks(range(2), x_axis, fontsize=10)
+    plt.xlabel('Aggressor row data / Victim row data')
+    
+    
+    plt.legend()
     plt.tight_layout()
     
     plt.savefig('./figure_10.png')
     plt.cla()
+
