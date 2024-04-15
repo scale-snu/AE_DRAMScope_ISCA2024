@@ -4,7 +4,7 @@ import os, sys
 filename = "run_.sh"
 exe = "Rowpress"
 
-device="s17_00"
+device="s16_00"
 vendor = 's'
 celcius= '75c'
 num_banks = 1
