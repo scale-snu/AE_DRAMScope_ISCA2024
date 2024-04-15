@@ -67,6 +67,10 @@ set_property IOSTANDARD  DIFF_SSTL12_DCI [get_ports "c0_sys_clk_n"] ;# Bank  65 
 
 
 
+#set_property PACKAGE_PIN D32 [get_ports hbm_cattrip_output]
+#set_property IOSTANDARD LVCMOS18 [get_ports hbm_cattrip_output]
+
+
 set_property PACKAGE_PIN BE51             [get_ports "c0_ddr4_dq[42]"] ;# Bank  66 VCCO - VCC1V2_TOP - IO_L24N_T3U_N11_66
 set_property IOSTANDARD  POD12_DCI        [get_ports "c0_ddr4_dq[42]"] ;# Bank  66 VCCO - VCC1V2_TOP - IO_L24N_T3U_N11_66
 set_property PACKAGE_PIN BD51             [get_ports "c0_ddr4_dq[43]"] ;# Bank  66 VCCO - VCC1V2_TOP - IO_L24P_T3U_N10_66
@@ -171,10 +175,10 @@ set_property IOSTANDARD  SSTL12_DCI       [get_ports "c0_ddr4_adr[14]"] ;# Bank 
 #set_property IOSTANDARD  SSTL12_DCI       [get_ports "c0_ddr4_cs_n[2]"] ;# Bank  65 VCCO - VCC1V2_TOP - IO_L23N_T3U_N9_PERSTN1_I2C_SDA_65
 #set_property PACKAGE_PIN BC42             [get_ports "c0_ddr4_ALERT_n"] ;# Bank  65 VCCO - VCC1V2_TOP - IO_L23P_T3U_N8_I2C_SCLK_65
 #set_property IOSTANDARD  SSTL12_DCI       [get_ports "c0_ddr4_ALERT_n"] ;# Bank  65 VCCO - VCC1V2_TOP - IO_L23P_T3U_N8_I2C_SCLK_65
-#set_property PACKAGE_PIN BE46             [get_ports "c0_ddr4_odt[1]"] ;# Bank  65 VCCO - VCC1V2_TOP - IO_L22N_T3U_N7_DBC_AD0N_D05_65
-#set_property IOSTANDARD  SSTL12_DCI       [get_ports "c0_ddr4_odt[1]"] ;# Bank  65 VCCO - VCC1V2_TOP - IO_L22N_T3U_N7_DBC_AD0N_D05_65
-#set_property PACKAGE_PIN BE45             [get_ports "c0_ddr4_cs_n[1]"] ;# Bank  65 VCCO - VCC1V2_TOP - IO_L22P_T3U_N6_DBC_AD0P_D04_65
-#set_property IOSTANDARD  SSTL12_DCI       [get_ports "c0_ddr4_cs_n[1]"] ;# Bank  65 VCCO - VCC1V2_TOP - IO_L22P_T3U_N6_DBC_AD0P_D04_65
+set_property PACKAGE_PIN BE46             [get_ports "c0_ddr4_odt[1]"] ;# Bank  65 VCCO - VCC1V2_TOP - IO_L22N_T3U_N7_DBC_AD0N_D05_65
+set_property IOSTANDARD  SSTL12_DCI       [get_ports "c0_ddr4_odt[1]"] ;# Bank  65 VCCO - VCC1V2_TOP - IO_L22N_T3U_N7_DBC_AD0N_D05_65
+set_property PACKAGE_PIN BE45             [get_ports "c0_ddr4_cs_n[1]"] ;# Bank  65 VCCO - VCC1V2_TOP - IO_L22P_T3U_N6_DBC_AD0P_D04_65
+set_property IOSTANDARD  SSTL12_DCI       [get_ports "c0_ddr4_cs_n[1]"] ;# Bank  65 VCCO - VCC1V2_TOP - IO_L22P_T3U_N6_DBC_AD0P_D04_65
 set_property PACKAGE_PIN BF43             [get_ports "c0_ddr4_adr[5]"] ;# Bank  65 VCCO - VCC1V2_TOP - IO_L21N_T3L_N5_AD8N_D07_65
 set_property IOSTANDARD  SSTL12_DCI       [get_ports "c0_ddr4_adr[5]"] ;# Bank  65 VCCO - VCC1V2_TOP - IO_L21N_T3L_N5_AD8N_D07_65
 set_property PACKAGE_PIN BF42             [get_ports "c0_ddr4_adr[3]"] ;# Bank  65 VCCO - VCC1V2_TOP - IO_L21P_T3L_N4_AD8P_D06_65
@@ -211,8 +215,8 @@ set_property PACKAGE_PIN BH45             [get_ports "c0_ddr4_ba[0]"] ;# Bank  6
 set_property IOSTANDARD  SSTL12_DCI       [get_ports "c0_ddr4_ba[0]"] ;# Bank  65 VCCO - VCC1V2_TOP - IO_L14N_T2L_N3_GC_A05_D21_65
 set_property PACKAGE_PIN BH44             [get_ports "c0_ddr4_adr[16]"] ;# Bank  65 VCCO - VCC1V2_TOP - IO_L14P_T2L_N2_GC_A04_D20_65
 set_property IOSTANDARD  SSTL12_DCI       [get_ports "c0_ddr4_adr[16]"] ;# Bank  65 VCCO - VCC1V2_TOP - IO_L14P_T2L_N2_GC_A04_D20_65
-#set_property PACKAGE_PIN BJ42             [get_ports "c0_ddr4_cke[1]"] ;# Bank  65 VCCO - VCC1V2_TOP - IO_L13N_T2L_N1_GC_QBC_A07_D23_65
-#set_property IOSTANDARD  SSTL12_DCI       [get_ports "c0_ddr4_cke[1]"] ;# Bank  65 VCCO - VCC1V2_TOP - IO_L13N_T2L_N1_GC_QBC_A07_D23_65
+set_property PACKAGE_PIN BJ42             [get_ports "c0_ddr4_cke[1]"] ;# Bank  65 VCCO - VCC1V2_TOP - IO_L13N_T2L_N1_GC_QBC_A07_D23_65
+set_property IOSTANDARD  SSTL12_DCI       [get_ports "c0_ddr4_cke[1]"] ;# Bank  65 VCCO - VCC1V2_TOP - IO_L13N_T2L_N1_GC_QBC_A07_D23_65
 set_property PACKAGE_PIN BH42             [get_ports "c0_ddr4_cke[0]"] ;# Bank  65 VCCO - VCC1V2_TOP - IO_L13P_T2L_N0_GC_QBC_A06_D22_65
 set_property IOSTANDARD  SSTL12_DCI       [get_ports "c0_ddr4_cke[0]"] ;# Bank  65 VCCO - VCC1V2_TOP - IO_L13P_T2L_N0_GC_QBC_A06_D22_65
 #set_property PACKAGE_PIN BK44             [get_ports "c0_ddr4_cs_n[3]"] ;# Bank  65 VCCO - VCC1V2_TOP - IO_L11N_T1U_N9_GC_A11_D27_65
