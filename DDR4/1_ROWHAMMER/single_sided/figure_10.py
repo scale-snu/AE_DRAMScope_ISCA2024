@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 count = 200000
 
 RD_DATA = 32
-N_ROW = 1024 # num_rows
+N_ROW = 832 # num_rows
 N_COL = pow(2,10)
-N_BIT = 65536 / 16
+N_BIT = 64 * N_COL
 
 edge = [0 for i in range(2)]
 typical = [0 for i in range(2)]
@@ -141,9 +141,11 @@ if __name__ == '__main__':
     chunk_size = 100000
     vendor = sys.argv[1]
 
-    if vendor == 's': remaps = [1,3,5,7,0,2,4,6,9,11,13,15,8,10,12,14,17,19,21,23,16,18,20,22,25,27,29,31,24,26,28,30]
+    #if   vendor == 's': remaps = [0,4,8,12,1,5,9,13,2,6,10,14,3,7,11,15,16,20,24,28,17,21,25,29,18,22,26,30,19,23,27,31]
+    if   vendor == 's': remaps = [0,16,1,17,2,18,3,19,4,20,5,21,6,22,7,23,8,24,9,25,10,26,11,27,12,28,13,29,14,30,15,31]
     elif vendor == 'h': remaps = [0,8,16,24,2,10,18,26,4,12,20,28,6,14,22,30,1,9,17,25,3,11,19,27,5,13,21,29,7,15,23,31]
     elif vendor == 'm': remaps = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]
+
     for i in range(2, len(sys.argv)):
         file = sys.argv[i]
         for line in read_file_chunks(file, chunk_size):
@@ -154,15 +156,15 @@ if __name__ == '__main__':
             chip, burst, bit_in_BL = col_info(col,bit)
             rev_bit = (4*burst + bit_in_BL) # +32*chip
 
-            if chip != 6: continue # data from one chip
+            if chip != 3: continue # data from one chip
 
             ######################################
             ############     6F2     #############
             ######################################
-            if vic >= 4096 and vic < 4096+640: # typical subarray
-                typical[wr_pttn] += 1 / N_ROW / N_BIT
-            elif vic > 32768 - 640 and vic < 32768: # edge subarray
-                edge[wr_pttn] += 1 / N_ROW / N_BIT
+            if vic >= 8192 and vic < 8192+832: # typical subarray
+                typical[1-wr_pttn] += 1 / N_ROW / N_BIT / 4096
+            elif vic > 32768 - 832 and vic < 32768: # edge subarray
+                edge[1-wr_pttn] += 1 / N_ROW / N_BIT / 4096
 
     ##############################################
     ###############     plot     #################
@@ -184,11 +186,16 @@ if __name__ == '__main__':
     plt.bar([0, 1], edge.values(), width=0.5)
     '''
     x_axis = ['0/1', '1/0']
-    plt.bar([i-0.175 for i  in range(2)], typical, width=0.35, alpha=0.8, color='blue', label='Typical')
-    plt.bar([i+0.175 for i  in range(2)], edge, width=0.35, alpha=0.8, color='orange', label='Edge')
+    plt.axhline(y=0.00035, color='lightgray', linewidth=0.5)
+    plt.axhline(y=0.0005, color='lightgray', linewidth=0.5)
+    plt.axhline(y=0.00065, color='lightgray', linewidth=0.5)
+    plt.bar([i-0.175 for i  in range(2)], typical, width=0.35, alpha=0.8, color='gray', label='Typical')
+    plt.bar([i+0.175 for i  in range(2)], edge, width=0.35, alpha=0.8, color='black', label='Edge')
     plt.yticks(fontsize=10)
     plt.xticks(range(2), x_axis, fontsize=10)
     plt.xlabel('Aggressor row data / Victim row data')
+    plt.yticks([0.0002, 0.00035, 0.0005, 0.00065, 0.0008])
+    plt.ylim([0.0002, 0.0008])
     
     
     plt.legend()
