@@ -4,14 +4,14 @@ import os, sys
 filename = "run_.sh"
 exe = "Rowpress"
 
-device="s16_00"
+device="s21_00"
 vendor = 's'
 celcius= '75c'
 num_banks = 1
-tRASs = [1300] # 7.8us
+tRASs = [267] # 7.8us
 tRPs  = [1]
 iter = [8000]
-rows = [i for i in range(1024)]
+rows = [i for i in range(8192, 8192+1024)]
 type = 'rowpress'
 
 

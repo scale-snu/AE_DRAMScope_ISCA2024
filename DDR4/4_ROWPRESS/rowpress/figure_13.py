@@ -6,7 +6,7 @@ count = 200000
 RD_DATA = 32
 N_ROW = 1024 # num_rows
 N_COL = pow(2,10)
-N_BIT = 65536 / 16
+N_BIT = 64 * N_COL
 
 upper = {}
 lower = {}
@@ -152,9 +152,11 @@ if __name__ == '__main__':
     chunk_size = 100000
     vendor = sys.argv[1]
 
-    if vendor == 's': remaps = [0,4,8,12,1,5,9,13,2,6,10,14,3,7,11,15,16,20,24,28,17,21,25,29,18,22,26,30,19,23,27,31]
+    #if   vendor == 's': remaps = [0,4,8,12,1,5,9,13,2,6,10,14,3,7,11,15,16,20,24,28,17,21,25,29,18,22,26,30,19,23,27,31]
+    if   vendor == 's': remaps = [0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31]
     elif vendor == 'h': remaps = [0,8,16,24,2,10,18,26,4,12,20,28,6,14,22,30,1,9,17,25,3,11,19,27,5,13,21,29,7,15,23,31]
     elif vendor == 'm': remaps = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]
+
     for i in range(2, len(sys.argv)):
         file = sys.argv[i]
         for line in read_file_chunks(file, chunk_size):
@@ -166,7 +168,7 @@ if __name__ == '__main__':
             chip, burst, bit_in_BL = col_info(col,bit)
             rev_bit = (4*burst + bit_in_BL) # +32*chip
 
-            if chip != 6: continue # data from one chip
+            if chip != 1: continue # data from one chip
 
             ######################################
             ############     6F2     #############
@@ -174,40 +176,46 @@ if __name__ == '__main__':
             if judge == -1 or judge == 15:
                 if vic%2 == 1:
                     if remaps[rev_bit] % 2 == 0:
-                        gate_A[wr_pttn] += 1 / N_ROW / N_BIT
+                        gate_A[wr_pttn] += 1 / N_ROW / N_BIT / 4096
                     else:
-                        gate_B[wr_pttn] += 1 / N_ROW / N_BIT
+                        gate_B[wr_pttn] += 1 / N_ROW / N_BIT / 4096
                 else:
                     if remaps[rev_bit] % 2 == 1:
-                        gate_A[wr_pttn] += 1 / N_ROW / N_BIT
+                        gate_A[wr_pttn] += 1 / N_ROW / N_BIT / 4096
                     else:
-                        gate_B[wr_pttn] += 1 / N_ROW / N_BIT
+                        gate_B[wr_pttn] += 1 / N_ROW / N_BIT / 4096
             elif judge == 1 or judge == -15:
                 if vic%2 == 1:
                     if remaps[rev_bit] % 2 == 1:
-                        gate_A[wr_pttn] += 1 / N_ROW / N_BIT
+                        gate_A[wr_pttn] += 1 / N_ROW / N_BIT / 4096
                     else:
-                        gate_B[wr_pttn] += 1 / N_ROW / N_BIT
+                        gate_B[wr_pttn] += 1 / N_ROW / N_BIT / 4096
                 else:
                     if remaps[rev_bit] % 2 == 0:
-                        gate_A[wr_pttn] += 1 / N_ROW / N_BIT
+                        gate_A[wr_pttn] += 1 / N_ROW / N_BIT / 4096
                     else:
-                        gate_B[wr_pttn] += 1 / N_ROW / N_BIT
+                        gate_B[wr_pttn] += 1 / N_ROW / N_BIT / 4096
 
     ##############################################
     ###############     plot     #################
     ##############################################
     plt.subplot(121)
+    plt.axhline(y=2*0.000000001, color='lightgray', linewidth=0.5)
+    plt.axhline(y=4*0.000000001, color='lightgray', linewidth=0.5)
+    plt.axhline(y=6*0.000000001, color='lightgray', linewidth=0.5)
     plt.title("Data 0", fontsize = 15, weight='bold')
-    # plt.ylim([0,0.0002])
-    plt.yticks(fontsize=10)
+    plt.yticks([i*0.000000002 for i in range(5)], fontsize=10)
+    plt.ylim([0, 8*0.000000001])
     plt.xticks(range(0, 2), fontsize=10)
     plt.bar(["Gate A", "Gate B"], [gate_A[0], gate_B[0]], width=0.5)
     
     plt.subplot(122)
+    plt.axhline(y=2*0.000000001, color='lightgray', linewidth=0.5)
+    plt.axhline(y=4*0.000000001, color='lightgray', linewidth=0.5)
+    plt.axhline(y=6*0.000000001, color='lightgray', linewidth=0.5)
     plt.title("Data 1", fontsize = 15, weight='bold')
-    # plt.ylim([0,0.0002])
-    plt.yticks(fontsize=10)
+    plt.yticks([i*0.000000002 for i in range(5)], fontsize=10)
+    plt.ylim([0, 8*0.000000001])
     plt.xticks(range(0, 2), fontsize=10)
     plt.bar(["Gate A", "Gate B"], [gate_A[1], gate_B[1]], width=0.5)
 
