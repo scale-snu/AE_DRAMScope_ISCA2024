@@ -1,7 +1,7 @@
 `include "parameters.vh"
 `include "project.vh"
 
-module softmc_top #(parameter tCK = 1500, SIM = "false")
+module softmc_top #(parameter tCK = 1250, SIM = "false")
   (
   // common signals
   input c0_sys_clk_p,
