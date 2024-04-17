@@ -137,7 +137,7 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/ip/phy_ddr4_1/phy_ddr4.xci">
+      <File Path="$PSRCDIR/sources_1/ip/phy_ddr4/phy_ddr4.xci">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
