@@ -15,3 +15,7 @@ cp -r SoftMC_hbm2/sw/basic SoftMC/sw/
 cp -r SoftMC_hbm2/sw/Reset/ SoftMC/sw/
 cp -r SoftMC_hbm2/sw/SoftMC_API/ SoftMC/sw/
 cp -r SoftMC_hbm2/sw/xdma_driver/ SoftMC/sw/
+
+# copy projects
+cp -r DRAM-Bender_U280/projects/U280/ DRAM-Bender/projects/U280
+cp -r SoftMC_hbm2/hw/boards/U280 SoftMC/hw/boards/U280

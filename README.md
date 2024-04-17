@@ -20,7 +20,9 @@ We has been successfully tested on:
 - AMD Alveo<sup><sub>TM</sub></sup> U280 ([link](https://www.xilinx.com/products/boards-and-kits/alveo/u280.html)).
 
 ### DRAM
-- DDR4: A Samsung M393A2K40BB1-CRC DDR4 RDIMM with 8Gb chips (K4A8G045WB-BCRC) manufactured in 2016.
+- DDR4: 
+   1) A Samsung M393A2K40BB1-CRC DDR4 RDIMM with 8Gb chips (K4A8G045WB-BCRC) manufactured in 2016.
+   2) A Samsung M393A4K40CB2-CVF DDR4 RDIMM with 8Gb chips (K4A8G045WC-BCVF) manufactured in 2021.
 - HBM2: HBM2 from Samsung [[80](https://docs.amd.com/v/u/en-US/wp508-hbm2)]. Detailed chip information such as the manufacturing year is not disclosed.
 
 ## Software prerequisities
@@ -50,7 +52,24 @@ $ git submodule update --init --recursive
 $ bash set_infrastucture.sh
 ```
 
-## How to program
+## How to create the bitfiles
+For quick reproduction, skip this step and use prebuilt bitfiles to program to an FPGA.
+
+
+Use Vivado GUI to proceed with `1) Synthesize` `2) Implementaion` `3) write bitstream.`
+#### DRAM-Bender for DDR4 
+```
+$ cd DRAM-Bender/projects/U280
+$ vivado U280.xpr
+```
+
+#### SoftMC for HBM2 
+```
+$ cd SoftMC/hw/boards/U280
+$ vivado U280.xpr
+```
+
+## How to program the prebuilt bitfiles
 We provide bitstream files for AMD Alveo<sup><sub>TM</sub></sup> U280. 
 
 ### DDR4
