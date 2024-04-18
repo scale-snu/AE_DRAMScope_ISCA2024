@@ -87,17 +87,18 @@ if __name__ == '__main__':
     ##############################################
     plt.subplot(121)
     plt.title("Data 0", fontsize = 15, weight='bold')
-    # plt.ylim([0,0.0002])
+    plt.ylim([0,0.00006])
     plt.yticks(fontsize=10)
     plt.xticks(range(0, 2), fontsize=10)
     plt.bar(["Gate A", "Gate B"], [gate_A[0], gate_B[0]], width=0.5)
     
     plt.subplot(122)
     plt.title("Data 1", fontsize = 15, weight='bold')
-    # plt.ylim([0,0.0002])
+    plt.ylim([0,0.00006])
     plt.yticks(fontsize=10)
     plt.xticks(range(0, 2), fontsize=10)
     plt.bar(["Gate A", "Gate B"], [gate_A[1], gate_B[1]], width=0.5)
+    
     plt.tight_layout()
     
     plt.savefig(f'./figure_13.png')

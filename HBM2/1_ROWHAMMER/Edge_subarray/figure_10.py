@@ -59,13 +59,14 @@ if __name__ == '__main__':
             ############     BER     #############
             ######################################
             if vic > 0 and vic < 8192-832: # typical 2 subarrays
-                typical[wr_pttn] += 1 / N_ROW / N_BIT / 2
+                typical[1-wr_pttn] += 1 / N_ROW / N_COL / N_BIT / 2
             elif vic >= 8192 - 832 and vic < 8192: # edge subarray
-                edge[wr_pttn] += 1 / N_ROW / N_BIT
+                edge[1-wr_pttn] += 1 / N_ROW / N_COL / N_BIT
 
     ##############################################
     ###############     plot     #################
-    ##############################################'
+    ##############################################
+    '''
     plt.subplot(121)
     plt.title("Typical subarray", fontsize = 15, weight='bold')
     plt.ylim([0,0.01])
@@ -79,7 +80,19 @@ if __name__ == '__main__':
     plt.yticks(fontsize=10)
     plt.xticks(range(0, 2), fontsize=10)
     plt.bar([0, 1], edge.values(), width=0.5)
-
+    '''
+    x_axis = ['0/1', '1/0']
+    for i in range(1,7):
+        plt.axhline(y=0.00003 + 0.00005 * i, color='lightgray', linewidth=0.5)
+    plt.bar([i-0.175 for i  in range(2)], typical.values(), width=0.35, alpha=0.8, color='gray', label='Typical')
+    plt.bar([i+0.175 for i  in range(2)], edge.values(), width=0.35, alpha=0.8, color='black', label='Edge')
+    plt.yticks(fontsize=10)
+    plt.xticks(range(2), x_axis, fontsize=10)
+    plt.xlabel('Aggressor row data / Victim row data')
+    plt.yticks([0.00003 + 0.00005 * i for i in range(7)])
+    plt.ylim([0.00003, 0.0003])
+    
+    plt.legend()
     plt.tight_layout()
     
     plt.savefig(f'./figure_10.png')

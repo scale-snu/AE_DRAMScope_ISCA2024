@@ -200,22 +200,20 @@ if __name__ == '__main__':
     ###############     plot     #################
     ##############################################
     plt.subplot(121)
-    plt.axhline(y=2*0.000000001, color='lightgray', linewidth=0.5)
-    plt.axhline(y=4*0.000000001, color='lightgray', linewidth=0.5)
-    plt.axhline(y=6*0.000000001, color='lightgray', linewidth=0.5)
+    for i in range(1,8-1):
+        plt.axhline(y=2*i*0.000000001, color='lightgray', linewidth=0.5)
     plt.title("Data 0", fontsize = 15, weight='bold')
-    plt.yticks([i*0.000000002 for i in range(5)], fontsize=10)
-    plt.ylim([0, 8*0.000000001])
+    plt.yticks([i*0.000000002 for i in range(8)], fontsize=10)
+    plt.ylim([0, 14*0.000000001])
     plt.xticks(range(0, 2), fontsize=10)
     plt.bar(["Gate A", "Gate B"], [gate_A[0], gate_B[0]], width=0.5)
     
     plt.subplot(122)
-    plt.axhline(y=2*0.000000001, color='lightgray', linewidth=0.5)
-    plt.axhline(y=4*0.000000001, color='lightgray', linewidth=0.5)
-    plt.axhline(y=6*0.000000001, color='lightgray', linewidth=0.5)
+    for i in range(1,8-1):
+        plt.axhline(y=2*i*0.000000001, color='lightgray', linewidth=0.5)
     plt.title("Data 1", fontsize = 15, weight='bold')
-    plt.yticks([i*0.000000002 for i in range(5)], fontsize=10)
-    plt.ylim([0, 8*0.000000001])
+    plt.yticks([i*0.000000002 for i in range(8)], fontsize=10)
+    plt.ylim([0, 14*0.000000001])
     plt.xticks(range(0, 2), fontsize=10)
     plt.bar(["Gate A", "Gate B"], [gate_A[1], gate_B[1]], width=0.5)
 

@@ -61,23 +61,23 @@ if __name__ == '__main__':
             ######################################
             if judge == -1 or judge == 15:
                 if vic%2 == 1:
-                    if rev_bit == 0:
+                    if rev_bit%2 == 0:
                         gate_A[wr_pttn] += 1 / N_ROW / N_COL / N_BIT
                     else:
                         gate_B[wr_pttn] += 1 / N_ROW / N_COL / N_BIT
                 else:
-                    if rev_bit == 1:
+                    if rev_bit%2 == 1:
                         gate_A[wr_pttn] += 1 / N_ROW / N_COL / N_BIT
                     else:
                         gate_B[wr_pttn] += 1 / N_ROW / N_COL / N_BIT
             elif judge == 1 or judge == -15:
                 if vic%2 == 1:
-                    if rev_bit == 1:
+                    if rev_bit%2 == 1:
                         gate_A[wr_pttn] += 1 / N_ROW / N_COL / N_BIT
                     else:
                         gate_B[wr_pttn] += 1 / N_ROW / N_COL / N_BIT
                 else:
-                    if rev_bit == 0:
+                    if rev_bit%2 == 0:
                         gate_A[wr_pttn] += 1 / N_ROW / N_COL / N_BIT
                     else:
                         gate_B[wr_pttn] += 1 / N_ROW / N_COL / N_BIT
@@ -86,19 +86,25 @@ if __name__ == '__main__':
     ###############     plot     #################
     ##############################################
     plt.subplot(121)
-    plt.title("Gate type A", fontsize = 15, weight='bold')
-    # plt.ylim([0,0.0002])
-    plt.yticks(fontsize=10)
+    plt.axhline(y=1*0.0001, color='lightgray', linewidth=0.5)
+    plt.axhline(y=2*0.0001, color='lightgray', linewidth=0.5)
+    plt.axhline(y=3*0.0001, color='lightgray', linewidth=0.5)
+    plt.title("Data 0", fontsize = 15, weight='bold')
+    plt.yticks([i*0.0001 for i in range(6)], fontsize=10)
+    plt.ylim([0, 5*0.0001])
     plt.xticks(range(0, 2), fontsize=10)
-    plt.bar([i for i in range(0, 2)], gate_A.values(), width=0.5)
+    plt.bar(["Gate A", "Gate B"], [gate_A[0], gate_B[0]], width=0.5)
     
     plt.subplot(122)
-    plt.title("Gate type B", fontsize = 15, weight='bold')
-    # plt.ylim([0,0.0002])
-    plt.yticks(fontsize=10)
+    plt.axhline(y=1*0.0001, color='lightgray', linewidth=0.5)
+    plt.axhline(y=2*0.0001, color='lightgray', linewidth=0.5)
+    plt.axhline(y=3*0.0001, color='lightgray', linewidth=0.5)
+    plt.title("Data 1", fontsize = 15, weight='bold')
+    plt.yticks([i*0.0001 for i in range(6)], fontsize=10)
+    plt.ylim([0, 5*0.0001])
     plt.xticks(range(0, 2), fontsize=10)
-    plt.bar([i for i in range(0, 2)], gate_B.values(), width=0.5)
-
+    plt.bar(["Gate A", "Gate B"], [gate_A[1], gate_B[1]], width=0.5)
+    
     plt.tight_layout()
     
     plt.savefig(f'./figure_13.png')
