@@ -1,1 +1,1 @@
-sudo ./Rowcopy -wait 3 -bank 0 -vendor s > edge_subarray.txt
+sudo ./Rowcopy -wait 4 -bank 0 -vendor s > edge_subarray.txt

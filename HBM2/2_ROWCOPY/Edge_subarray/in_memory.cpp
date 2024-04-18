@@ -103,7 +103,7 @@ void test(fpga_t* fpga) {
   //========================================//
   // find subarray size
   //========================================//
-  for (dst_row = src_row + 1; dst_row < NUM_ROWS; dst_row++) {
+  for (dst_row = src_row + 16; dst_row < NUM_ROWS; dst_row+=16) {
     iseq->size = 0;
     uint8_t src_pattern = 0xFF; 
     uint8_t dst_pattern = 0x00;

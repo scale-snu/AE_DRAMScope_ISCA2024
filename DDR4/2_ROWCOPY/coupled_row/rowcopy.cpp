@@ -6,6 +6,7 @@
 #include <iostream>
 #include <cstring>
 #include <vector>
+#include <set>
 
 #define NUM_ROWS 131072 // x4
 
@@ -98,89 +99,56 @@ int main(int argc, char * argv[]) {
   platform.set_aref(true);
   Program p;
 
-  ///////////////////////////////////////////////////////////////////////
-  //////////////////////      WRITE ROWS      ///////////////////////////
-  ///////////////////////////////////////////////////////////////////////
-  WriteRow(&platform, src_dp, bank, src);
-  WriteRow(&platform, dst_dp, bank, dst);
-  for (int i = 1; i < 4; i++) {
-    WriteRow(&platform, src_dp, bank, src+i*NUM_ROWS/4);
-    WriteRow(&platform, dst_dp, bank, dst+i*NUM_ROWS/4);
-  }
+  set <int> size;
 
-  ///////////////////////////////////////////////////////////////////////
-  ////////////////////////      READ ROWS      //////////////////////////
-  ///////////////////////////////////////////////////////////////////////
-  ReadRow(&platform, bank, src);
-  ReadRow(&platform, bank, dst);
-  for (int i = 1; i < 4; i++) {
-    ReadRow(&platform, bank, src+i*NUM_ROWS/4);
-    ReadRow(&platform, bank, dst+i*NUM_ROWS/4);
-  }
-
-  ///////////////////////////////////////////////////////////////////////
-  //////////////////////      COMPARE DATA      /////////////////////////
-  ///////////////////////////////////////////////////////////////////////
   int bufsize = 8192;
   unsigned char buf[bufsize];
 
-  uint read_row[8] = {src, dst, src+NUM_ROWS/4, dst+NUM_ROWS/4,
-                      src+2*NUM_ROWS/4, dst+2*NUM_ROWS/4, src+3*NUM_ROWS/4, dst+3*NUM_ROWS/4
-                      };
-  cout << "=========================" << endl;
-  cout << endl;
-  printf("Before RowCopy\n");
-  printf("\n");
-  for (int idx = 0; idx < 8; idx++) {
-    platform.receiveData(buf, bufsize);
-    printf("row %4d:\t", read_row[idx]);
-    for (int i = 12 ; i < 12+8; i+=2){
-      printf("%2x", (uint8_t)((buf[27-i] * 16) + (buf[27-(i+1)] % 16)));
-    }
-    for (int i = 12 ; i < 12+8; i+=2){
-      printf("%2x", (uint8_t)((buf[27-(i+1)] / 16) + (buf[27-i] & 0xf0)));
-    }
-    cout << endl;
-  }
-  cout << "=========================" << endl;
-  cout << endl;
-
-  ///////////////////////////////////////////////////////////////////////
-  /////////////////////////      ROWCOPY      ///////////////////////////
-  ///////////////////////////////////////////////////////////////////////
-  RowCopy(&platform, bank, src, dst, wait);
+  bool find = false;
   
-  ///////////////////////////////////////////////////////////////////////
-  ////////////////////////      READ ROWS      //////////////////////////
-  ///////////////////////////////////////////////////////////////////////
-  ReadRow(&platform, bank, src);
-  ReadRow(&platform, bank, dst);
+  for (int interval = 1; interval < NUM_ROWS; interval*=2) {
+    ///////////////////////////////////////////////////////////////////////
+    //////////////////////      WRITE ROWS      ///////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    WriteRow(&platform, src_dp, bank, src);
+    WriteRow(&platform, dst_dp, bank, dst);
+    WriteRow(&platform, src_dp, bank, (src+interval)%NUM_ROWS);
+    WriteRow(&platform, dst_dp, bank, (dst+interval)%NUM_ROWS);
 
-  for (int i = 1; i < 4; i++) {
-    ReadRow(&platform, bank, src+i*NUM_ROWS/4);
-    ReadRow(&platform, bank, dst+i*NUM_ROWS/4);
-  }
-
-  ///////////////////////////////////////////////////////////////////////
-  //////////////////////      COMPARE DATA      /////////////////////////
-  ///////////////////////////////////////////////////////////////////////
-  printf("After RowCopy\n");
-  printf("\n");
-  for (int idx = 0; idx < 8; idx++) {
-    platform.receiveData(buf, 8192);
-    printf("row %4d:\t", read_row[idx]);
-    int start = bufsize/128/4;
-    int end   = bufsize/128/4*2;
+    ///////////////////////////////////////////////////////////////////////
+    //////////////////////        ROW COPY        /////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    RowCopy(&platform, bank, src, dst, wait);
     
-    for (int i = start; i < end; i+=2){
-      printf("%2x", (uint8_t)((buf[bufsize/128-i-1] * 16) + (buf[bufsize/128-(i+1)-1] % 16)));
+    ///////////////////////////////////////////////////////////////////////
+    ////////////////////////      READ ROWS      //////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    ReadRow(&platform, bank, (dst+interval)%NUM_ROWS);
+
+    ///////////////////////////////////////////////////////////////////////
+    //////////////////////      COMPARE DATA      /////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    int count = 0;
+    platform.receiveData(buf, bufsize);
+    int start = bufsize/128/4*2;
+    int end   = bufsize/128/4*3;
+    for (int i = start ; i < end; i++){
+      if((uint8_t)buf[bufsize/128-i-1] == (uint8_t)src_dp) {
+        count++;
+      }
     }
-    cout << " ";
-    for (int i = start; i < end; i+=2){
-      printf("%2x", (uint8_t)((buf[bufsize/128-(i+1)-1] / 16) + (buf[bufsize/128-i-1] / 16) * 16));
+    if (count > 14) {
+      //cout << "Coupled row interval = " << interval << endl;
+      size.insert(interval);
+      find = true;
     }
-    cout << endl;
-    if(idx == 3) printf("\nCheck unintended RowCopy\n\n");
   }
-  cout << "=========================" << endl;
+  std::cout << std::endl << "=======================" << std::endl;
+  if(!find)
+    cout << "There is no coupled-rows." << endl;
+  else {
+    std::cout << "Subarray size = " << std::endl;
+    for (auto it = size.begin(); it != size.end(); it++)
+      std::cout << *it << std::endl;
+  }
 }

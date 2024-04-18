@@ -149,11 +149,14 @@ void test(fpga_t* fpga) {
 
       for(int sel_col = 0; sel_col < NUM_COLS; sel_col++) {
         rc = fpga_recv(fpga, 0, (void*)rbuf, 64, 0, 0);
+        int count = 0;
         for(int i = 8*pc; i < 8 + 8*pc; i++) {
           if(rbuf[i] == pattern_32) {
-            size.insert(interval);
+            count++;
           }
         }
+        if (count > 6)
+          size.insert(interval);
       }
 
 

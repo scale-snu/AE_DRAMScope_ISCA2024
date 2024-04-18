@@ -6,6 +6,7 @@
 #include <iostream>
 #include <cstring>
 #include <vector>
+#include <set>
 
 #define NUM_ROWS 131072 // x4
 // #define NUM_ROWS 65536 // x8
@@ -44,13 +45,15 @@ int main(int argc, char * argv[]) {
   platform.set_aref(true); // true 
   Program p;
 
+  ///////////////////////////////////////////////////////////////////////
+  //////////////////////  Find subarray size   //////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+  set <int> subarray_boundary;
+  uint src_row = 16;
+  uint dst_row = 0;
   src_dp = 0xffffffff;
-  dst_dp = 0xffffffff;
-  uint src_row = 128;
-  uint8_t error = 0;
-
-  for (int dst_row = 2000; dst_row < NUM_ROWS; dst_row+=500) {
-
+  dst_dp = 0x00000000;
+  for (dst_row = src_row + 32; dst_row < NUM_ROWS; dst_row+=32) {
     ///////////////////////////////////////////////////////////////////////
     //////////////////////      WRITE ROWS      ///////////////////////////
     ///////////////////////////////////////////////////////////////////////
@@ -77,8 +80,60 @@ int main(int argc, char * argv[]) {
 
     for (int idx = 0; idx < 1; idx++) {
       platform.receiveData(buf, bufsize);
-      int start = bufsize/128/4;
-      int end   = bufsize/128/4*2;
+      int start = bufsize/128/4*2;
+      int end   = bufsize/128/4*3;
+      for (int i = start ; i < end; i++){
+        if((uint8_t)buf[bufsize/128-i-1] != (uint8_t)src_dp) {
+          count ++;
+        }
+      }
+    }
+    if (count > 14) {
+      subarray_boundary.insert(dst_row);
+      src_row = dst_row;
+    }
+  }
+
+  ///////////////////////////////////////////////////////////////////////
+  //////////////////////  Find edge subarrays   /////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+  std::set <int> size;
+  src_row = 32;
+  uint8_t error = 0;
+  src_dp = 0xffffffff;
+  dst_dp = 0xffffffff;
+  subarray_boundary.erase(subarray_boundary.begin());
+  subarray_boundary.erase(subarray_boundary.begin());
+  for (auto it = subarray_boundary.begin(); it != subarray_boundary.end(); it++) {
+    dst_row = *it-1;
+    ///////////////////////////////////////////////////////////////////////
+    //////////////////////      WRITE ROWS      ///////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    WriteRow(&platform, src_dp, bank, src_row);
+    WriteRow(&platform, dst_dp, bank, dst_row);
+
+    ///////////////////////////////////////////////////////////////////////
+    /////////////////////////      ROWCOPY      ///////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    RowCopy(&platform, bank, src_row, dst_row, wait);
+
+    ///////////////////////////////////////////////////////////////////////
+    ////////////////////////      READ ROW      ///////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    ReadRow(&platform, bank, dst_row);
+
+    ///////////////////////////////////////////////////////////////////////
+    //////////////////////      COMPARE DATA      /////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    int bufsize = 8192;
+    unsigned char buf[bufsize];
+
+    int count = 0;
+
+    for (int idx = 0; idx < 1; idx++) {
+      platform.receiveData(buf, bufsize);
+      int start = bufsize/128/4*2;
+      int end   = bufsize/128/4*3;
       for (int i = start ; i < end; i++){
         if((uint8_t)buf[bufsize/128-i-1] != (uint8_t)src_dp) {
           // printf("copied data: %x, src_data: %x\n", (uint8_t)buf[bufsize/128-i-1], (uint8_t)src_dp);
@@ -88,10 +143,16 @@ int main(int argc, char * argv[]) {
       }
     }
 
-    if (count > 4) {
-      printf("Edge subarray row: %6d, %6d\n", src_row, dst_row);
-      src_row = dst_row + 700;
-      dst_row += 2000;
+    if (count > 14) {
+      size.insert(((dst_row - src_row)/4096+1)*4096);
+      cerr << "Change src_row to " << *it << endl;
+      src_row = *it;
+      it++;
+      it++;
     }
   }
+  cout << endl << "===============================" << endl;
+  cout << "Distance between edge subarrays = " << endl;
+  for (auto it = size.begin(); it != size.end(); it++)
+    cout << *it << endl;
 }
